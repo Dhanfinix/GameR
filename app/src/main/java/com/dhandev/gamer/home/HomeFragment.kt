@@ -5,13 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.dhandev.gamer.R
+import com.dhandev.gamer.core.data.Resource
+import com.dhandev.gamer.core.ui.GamesAdapter
+import com.dhandev.gamer.core.ui.ViewModelFactory
 import com.dhandev.gamer.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+    private lateinit var homeViewModel: HomeViewModel
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,17 +29,46 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (activity != null){
+            val gamesAdapter = GamesAdapter()
+            gamesAdapter.onItemClick = {selectedData ->
+                Toast.makeText(requireActivity(), selectedData.name, Toast.LENGTH_SHORT).show()
+            }
+
+            val factory = ViewModelFactory.getInstance(requireActivity())
+            homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+
+            homeViewModel.games.observe(viewLifecycleOwner) { games ->
+                if (games != null){
+                    when(games){
+                        is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                        is Resource.Success -> {
+                            binding.progressBar.visibility = View.GONE
+                            gamesAdapter.setData(games.data)
+                        }
+                        is Resource.Error -> {
+                            binding.progressBar.visibility = View.GONE
+                            binding.viewError.root.visibility = View.VISIBLE
+                            binding.viewError.tvError.text = games.message ?: getString(R.string.maaf_terjadi_eror)
+                        }
+                    }
+                }
+            }
+            with(binding.rvTourism) {
+                layoutManager = LinearLayoutManager(context)
+                setHasFixedSize(true)
+                adapter = gamesAdapter
+            }
         }
-        return root
+
+
     }
 
     override fun onDestroyView() {

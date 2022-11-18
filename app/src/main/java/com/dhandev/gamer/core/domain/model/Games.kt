@@ -1,0 +1,15 @@
+package com.dhandev.gamer.core.domain.model
+
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Games(
+    val id: Int,
+    val rating: Double,
+    val name: String,
+    val backgroundImage: String,
+    val released: String,
+    val isFavorite: Boolean
+) : Parcelable

@@ -1,5 +1,6 @@
 package com.dhandev.gamer.core.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.dhandev.gamer.core.data.source.local.LocalDataSource
@@ -35,6 +36,7 @@ class GamesRepository private constructor(
         object: NetworkBoundResource<List<Games>, List<GamesResponse>>(appExecutors){
             override fun loadFromDB(): LiveData<List<Games>> {
                 return Transformations.map(localDataSource.getAllGames()){
+                    Log.e("Games It is null???", it.toString())
                     DataMapper.mapEntitiesToDomain(it)
                 }
             }
@@ -42,7 +44,7 @@ class GamesRepository private constructor(
             override fun shouldFetch(data: List<Games>?): Boolean = data == null ||data.isEmpty()
 
             override fun createCall(): LiveData<ApiResponse<List<GamesResponse>>> =
-                remoteDataSource.getAllTourism()
+                remoteDataSource.getAllGames()
 
             override fun saveCallResult(data: List<GamesResponse>) {
                 val tourismList = DataMapper.mapResponsesToEntities(data)
@@ -50,6 +52,7 @@ class GamesRepository private constructor(
             }
 
         }.asLiveData()
+
 
     override fun getFavGames(): LiveData<List<Games>> {
         return Transformations.map(localDataSource.getFavoriteGames()){

@@ -22,7 +22,7 @@ object Injection {
         return GamesRepository.getInstance(remoteDataSource, localDataSource, appExecutors)
     }
 
-    fun provideTourismUseCase(context: Context): GamesUseCase {
+    fun provideGamesUseCase(context: Context): GamesUseCase {
         val repository = provideRepository(context)
         return GamesInteractor(repository)
     }

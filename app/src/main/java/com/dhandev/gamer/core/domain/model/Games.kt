@@ -11,5 +11,8 @@ data class Games(
     val name: String,
     val backgroundImage: String,
     val released: String,
+    val slug: String,
+    val metacritic: Double,
+    val suggestionsCount: Int,
     val isFavorite: Boolean
 ) : Parcelable

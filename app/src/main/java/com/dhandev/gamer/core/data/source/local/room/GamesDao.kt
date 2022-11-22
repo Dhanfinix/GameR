@@ -18,4 +18,5 @@ interface GamesDao {
 
     @Update
     fun updateFavGames(games: GamesEntity)
+
 }

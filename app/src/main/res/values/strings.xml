@@ -9,4 +9,10 @@
     <string name="deskripsi_gambar">Deskripsi Gambar</string>
     <string name="title_game">Title Game</string>
     <string name="subtitle">Text Subtitle</string>
+    <string name="game_background_image">Game Background Image</string>
+    <string name="favorite">Favorite</string>
+    <string name="games_description">Games description</string>
+    <string name="rating">Rating</string>
+    <string name="metacritics">Metacritics</string>
+    <string name="suggestion_count">Suggestion Count</string>
 </resources>

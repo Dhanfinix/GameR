@@ -6,7 +6,7 @@ import com.dhandev.gamer.core.domain.model.Games
 
 object DataMapper {
     fun mapResponsesToEntities(input: List<GamesResponse>): List<GamesEntity> {
-        val tourismList = ArrayList<GamesEntity>()
+        val gamesList = ArrayList<GamesEntity>()
         input.map {
             val games = GamesEntity(
                 id = it.id,
@@ -14,11 +14,14 @@ object DataMapper {
                 name = it.name,
                 backgroundImage = it.backgroundImage,
                 released = it.released,
-                isFavorite = false
+                isFavorite = false,
+                metacritic =  it.metacritic,
+                slug = it.slug,
+                suggestionsCount = it.suggestionsCount
             )
-            tourismList.add(games)
+            gamesList.add(games)
         }
-        return tourismList
+        return gamesList
     }
 
     fun mapEntitiesToDomain(input: List<GamesEntity>): List<Games> =
@@ -29,7 +32,10 @@ object DataMapper {
                 name = it.name,
                 backgroundImage = it.backgroundImage,
                 released = it.released,
-                isFavorite = it.isFavorite
+                isFavorite = it.isFavorite,
+                metacritic =  it.metacritic,
+                slug = it.slug,
+                suggestionsCount = it.suggestionsCount
             )
         }
 
@@ -39,6 +45,9 @@ object DataMapper {
         name = input.name,
         backgroundImage = input.backgroundImage,
         released = input.released,
-        isFavorite = input.isFavorite
+        isFavorite = input.isFavorite,
+        metacritic = input.metacritic,
+        slug = input.slug,
+        suggestionsCount = input.suggestionsCount
     )
 }

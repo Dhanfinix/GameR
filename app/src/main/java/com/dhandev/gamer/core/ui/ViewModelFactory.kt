@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dhandev.gamer.core.di.Injection
 import com.dhandev.gamer.core.domain.usecase.GamesUseCase
+import com.dhandev.gamer.detail.DetailViewModel
 import com.dhandev.gamer.favorite.FavoriteViewModel
 import com.dhandev.gamer.home.HomeViewModel
 import com.dhandev.gamer.search.SearchViewModel
@@ -19,7 +20,7 @@ class ViewModelFactory private constructor(private val gamesUseCase: GamesUseCas
         fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: ViewModelFactory(
-                    Injection.provideTourismUseCase(context)
+                    Injection.provideGamesUseCase(context)
                 )
             }
     }
@@ -29,6 +30,9 @@ class ViewModelFactory private constructor(private val gamesUseCase: GamesUseCas
         when {
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(gamesUseCase) as T
+            }
+            modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
+                DetailViewModel(gamesUseCase) as T
             }
             modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
                 FavoriteViewModel(gamesUseCase) as T

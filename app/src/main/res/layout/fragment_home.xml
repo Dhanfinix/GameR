@@ -7,10 +7,11 @@
     tools:context=".home.HomeFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rv_tourism"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:listitem="@layout/item_list_games" />
+        android:id="@+id/rv_tourism"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp"
+        tools:listitem="@layout/item_list_games" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

@@ -1,5 +1,6 @@
 package com.dhandev.gamer.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.dhandev.gamer.core.data.Resource
 import com.dhandev.gamer.core.ui.GamesAdapter
 import com.dhandev.gamer.core.ui.ViewModelFactory
 import com.dhandev.gamer.databinding.FragmentHomeBinding
+import com.dhandev.gamer.detail.DetailActivity
 
 class HomeFragment : Fragment() {
 
@@ -39,7 +41,10 @@ class HomeFragment : Fragment() {
         if (activity != null){
             val gamesAdapter = GamesAdapter()
             gamesAdapter.onItemClick = {selectedData ->
-                Toast.makeText(requireActivity(), selectedData.name, Toast.LENGTH_SHORT).show()
+                val intent = Intent(requireActivity(), DetailActivity::class.java)
+                intent.putExtra(DetailActivity.EXTRA_DATA, selectedData)
+                startActivity(intent)
+//                Toast.makeText(requireActivity(), selectedData.id.toString(), Toast.LENGTH_SHORT).show()
             }
 
             val factory = ViewModelFactory.getInstance(requireActivity())
@@ -47,6 +52,7 @@ class HomeFragment : Fragment() {
 
             homeViewModel.games.observe(viewLifecycleOwner) { games ->
                 if (games != null){
+//                    Toast.makeText(requireActivity(), games.data?.get(0).toString(), Toast.LENGTH_SHORT).show()
                     when(games){
                         is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                         is Resource.Success -> {

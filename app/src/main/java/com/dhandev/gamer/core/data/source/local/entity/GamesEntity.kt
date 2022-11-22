@@ -24,6 +24,15 @@ data class GamesEntity(
     @ColumnInfo(name = "released")
     var released: String,
 
+    @ColumnInfo(name = "slug")
+    var slug: String,
+
+    @ColumnInfo(name = "metacritic")
+    var metacritic: Double,
+
+    @ColumnInfo(name = "suggestionsCount")
+    var suggestionsCount: Int,
+
     @ColumnInfo(name = "isFavorite")
     var isFavorite: Boolean
 )

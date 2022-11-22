@@ -16,6 +16,15 @@ data class GamesResponse (
     @field:SerializedName("background_image")
     val backgroundImage: String,
 
+    @field:SerializedName("slug")
+    val slug: String,
+
+    @field:SerializedName("metacritic")
+    val metacritic: Double,
+
+    @field:SerializedName("suggestions_count")
+    val suggestionsCount: Int,
+
     @field:SerializedName("released")
     val released: String
 

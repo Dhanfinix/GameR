@@ -11,4 +11,10 @@ interface ApiService {
     fun getList(
         @Query("key") key: String
     ): Call<ListGamesResponse>
+
+    @GET("games")
+    fun getSearch(
+        @Query("key") key: String,
+        @Query("search") search: String,
+    ): Call<ListGamesResponse>
 }

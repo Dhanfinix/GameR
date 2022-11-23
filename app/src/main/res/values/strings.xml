@@ -15,4 +15,6 @@
     <string name="rating">Rating</string>
     <string name="metacritics">Metacritics</string>
     <string name="suggestion_count">Suggestion Count</string>
+    <string name="search_games">Search Games</string>
+    <string name="search">Search</string>
 </resources>

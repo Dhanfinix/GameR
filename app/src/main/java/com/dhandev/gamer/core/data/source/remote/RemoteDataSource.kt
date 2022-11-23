@@ -46,5 +46,29 @@ class RemoteDataSource private constructor(private val apiService: ApiService) {
 
         return resultData
     }
+
+    fun getSearch(query: String): LiveData<ApiResponse<List<GamesResponse>>> {
+        val searchResult = MutableLiveData<ApiResponse<List<GamesResponse>>>()
+
+        //get data from remote api
+        val client = apiService.getSearch(BuildConfig.API_KEY, query)
+
+        client.enqueue(object : Callback<ListGamesResponse> {
+            override fun onResponse(
+                call: Call<ListGamesResponse>,
+                response: Response<ListGamesResponse>
+            ) {
+                val dataArray = response.body()?.results
+                searchResult.value = if (dataArray != null) ApiResponse.Success(dataArray) else ApiResponse.Empty
+            }
+
+            override fun onFailure(call: Call<ListGamesResponse>, t: Throwable) {
+                searchResult.value = ApiResponse.Error(t.message.toString())
+                Log.e("RemoteDataSource", t.message.toString())
+            }
+        })
+
+        return searchResult
+    }
 }
 

@@ -13,26 +13,26 @@ data class GamesEntity(
     var id: Int,
 
     @ColumnInfo(name = "rating")
-    var rating: Double,
+    var rating: Double?,
 
     @ColumnInfo(name = "name")
-    var name: String,
+    var name: String?,
 
     @ColumnInfo(name = "backgroundImage")
-    var backgroundImage: String,
+    var backgroundImage: String?,
 
     @ColumnInfo(name = "released")
-    var released: String,
+    var released: String?,
 
     @ColumnInfo(name = "slug")
-    var slug: String,
+    var slug: String?,
 
     @ColumnInfo(name = "metacritic")
-    var metacritic: Double,
+    var metacritic: Double?,
 
     @ColumnInfo(name = "suggestionsCount")
-    var suggestionsCount: Int,
+    var suggestionsCount: Int?,
 
     @ColumnInfo(name = "isFavorite")
-    var isFavorite: Boolean
+    var isFavorite: Boolean?
 )

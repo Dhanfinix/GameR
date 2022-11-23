@@ -13,6 +13,9 @@ interface GamesDao {
     @Query("SELECT * FROM GAMES WHERE ISFAVORITE = 1")
     fun getFavGames() : LiveData<List<GamesEntity>>
 
+    @Query("SELECT * FROM GAMES WHERE NAME LIKE '%' || :name || '%'")
+    fun getSearch(name: String?) : LiveData<List<GamesEntity>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertGames(games: List<GamesEntity>)
 

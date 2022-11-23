@@ -8,24 +8,24 @@ data class GamesResponse (
     val id: Int,
 
     @field:SerializedName("rating")
-    val rating: Double,
+    val rating: Double? = null,
 
     @field:SerializedName("name")
-    val name: String,
+    val name: String? = null,
 
     @field:SerializedName("background_image")
-    val backgroundImage: String,
+    val backgroundImage: String? = null,
 
     @field:SerializedName("slug")
-    val slug: String,
+    val slug: String? = null,
 
     @field:SerializedName("metacritic")
-    val metacritic: Double,
+    val metacritic: Double? = null,
 
     @field:SerializedName("suggestions_count")
-    val suggestionsCount: Int,
+    val suggestionsCount: Int? = null,
 
     @field:SerializedName("released")
-    val released: String
+    val released: String? = null
 
 )

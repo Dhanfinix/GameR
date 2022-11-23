@@ -47,8 +47,33 @@ class GamesRepository private constructor(
                 remoteDataSource.getAllGames()
 
             override fun saveCallResult(data: List<GamesResponse>) {
-                val tourismList = DataMapper.mapResponsesToEntities(data)
-                localDataSource.insertGames(tourismList)
+                val gameList = DataMapper.mapResponsesToEntities(data)
+                localDataSource.insertGames(gameList)
+            }
+
+        }.asLiveData()
+
+    override fun searchGames(query: String): LiveData<Resource<List<Games>>> =
+        object: NetworkBoundResource<List<Games>, List<GamesResponse>>(appExecutors){
+            override fun loadFromDB(): LiveData<List<Games>> {
+                return Transformations.map(localDataSource.getSearch(query)){
+                    Log.e("Search result null???", it.toString())
+                    DataMapper.mapEntitiesToDomain(it)
+                }
+            }
+
+            override fun shouldFetch(data: List<Games>?): Boolean {
+                val should = data == null || data.isEmpty()
+                Log.e("SHouLD FETCH", should.toString())
+                return should
+            }
+
+            override fun createCall(): LiveData<ApiResponse<List<GamesResponse>>> =
+                remoteDataSource.getSearch(query)
+
+            override fun saveCallResult(data: List<GamesResponse>) {
+                val gameList = DataMapper.mapResponsesToEntities(data)
+                localDataSource.insertGames(gameList)
             }
 
         }.asLiveData()

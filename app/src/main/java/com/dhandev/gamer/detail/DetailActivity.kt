@@ -41,18 +41,21 @@ class DetailActivity : AppCompatActivity() {
             Glide.with(this)
                 .load(it.backgroundImage)
                 .into(binding.ivDetailImage)
-            val rating = it.rating * 100/5
+            val rating = if (it.rating != null) it.rating * 100/5 else 0
             binding.content.progRating.progress = rating.toInt()
             binding.content.tvRating.text = it.rating.toString()
-            binding.content.progMeta.progress = it.metacritic.toInt()
+            binding.content.progMeta.progress = it.metacritic?.toInt() ?: 0
             binding.content.tvMeta.text = it.metacritic.toString()
 
             var statusFavorite = detailGames.isFavorite
-            setStatusFavorite(statusFavorite)
-            binding.fab.setOnClickListener {
-                statusFavorite = !statusFavorite
-                detailViewModel.setFavorite(detailGames, statusFavorite)
+            if (statusFavorite != null) {
                 setStatusFavorite(statusFavorite)
+            }
+            binding.fab.setOnClickListener {
+                statusFavorite = !statusFavorite!!
+                detailViewModel.setFavorite(detailGames, statusFavorite!!)
+                setStatusFavorite(statusFavorite!!)
+                //TODO: LAST TIME I ADD NULL ON ENTITY, RESPONSE, DOMAIN
             }
         }
     }

@@ -6,6 +6,7 @@ import com.dhandev.gamer.core.domain.model.Games
 
 interface GamesUseCase {
     fun getAllGames() :LiveData<Resource<List<Games>>>
+    fun searchGames(query: String) :LiveData<Resource<List<Games>>>
     fun getFavGames() :LiveData<List<Games>>
     fun setFavGames(games: Games, state: Boolean)
 }

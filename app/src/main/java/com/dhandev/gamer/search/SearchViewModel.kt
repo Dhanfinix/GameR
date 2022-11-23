@@ -3,12 +3,12 @@ package com.dhandev.gamer.search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.dhandev.gamer.core.domain.model.Games
 import com.dhandev.gamer.core.domain.usecase.GamesUseCase
 
-class SearchViewModel (gamesUseCase: GamesUseCase): ViewModel() {
+class SearchViewModel (private val gamesUseCase: GamesUseCase): ViewModel() {
+    fun setSearch(query: String) =
+        gamesUseCase.searchGames(query)
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is search Fragment"
-    }
-    val text: LiveData<String> = _text
+//    val searchRes = gamesUseCase.searchGames("ONE")
 }

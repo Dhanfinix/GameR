@@ -2,6 +2,7 @@ package com.dhandev.gamer.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,6 +59,7 @@ class HomeFragment : Fragment() {
                         is Resource.Success -> {
                             binding.progressBar.visibility = View.GONE
                             gamesAdapter.setData(games.data)
+                            Log.e("Home Data", games.data.toString())
                         }
                         is Resource.Error -> {
                             binding.progressBar.visibility = View.GONE

@@ -45,8 +45,8 @@ val networkModule = module {
 }
 
 val repositoryModule = module {
-    single { LocalDataSource(get()) }
+    single { com.dhandev.gamer.core.data.source.local.LocalDataSource(get()) }
     single { RemoteDataSource(get()) }
     factory { AppExecutors() }
-    single<IGamesRepository> { GamesRepository(get(), get(), get()) }
+    single<IGamesRepository> { com.dhandev.gamer.core.data.GamesRepository(get(), get(), get()) }
 }

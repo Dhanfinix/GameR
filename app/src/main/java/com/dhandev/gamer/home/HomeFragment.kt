@@ -52,13 +52,13 @@ class HomeFragment : Fragment() {
                 if (games != null){
 //                    Toast.makeText(requireActivity(), games.data?.get(0).toString(), Toast.LENGTH_SHORT).show()
                     when(games){
-                        is Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
-                        is Resource.Success -> {
+                        is com.dhandev.gamer.core.data.Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
+                        is com.dhandev.gamer.core.data.Resource.Success -> {
                             binding.progressBar.visibility = View.GONE
                             gamesAdapter.setData(games.data)
                             Log.e("Home Data", games.data.toString())
                         }
-                        is Resource.Error -> {
+                        is com.dhandev.gamer.core.data.Resource.Error -> {
                             binding.progressBar.visibility = View.GONE
                             binding.viewError.root.visibility = View.VISIBLE
                             binding.viewError.tvError.text = games.message ?: getString(R.string.maaf_terjadi_eror)

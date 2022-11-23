@@ -16,12 +16,12 @@ import kotlinx.coroutines.flow.map
 
 class GamesRepository constructor(
     private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource,
+    private val localDataSource: com.dhandev.gamer.core.data.source.local.LocalDataSource,
     private val appExecutors: AppExecutors
 ) : IGamesRepository {
 
-    override fun getAllGames(): Flow<Resource<List<Games>>> =
-        object: NetworkBoundResource<List<Games>, List<GamesResponse>>(appExecutors){
+    override fun getAllGames(): Flow<com.dhandev.gamer.core.data.Resource<List<Games>>> =
+        object: com.dhandev.gamer.core.data.NetworkBoundResource<List<Games>, List<GamesResponse>>(appExecutors){
             override fun loadFromDB(): Flow<List<Games>> {
                 return localDataSource.getAllGames().map { DataMapper.mapEntitiesToDomain(it) }
             }
@@ -38,8 +38,8 @@ class GamesRepository constructor(
 
         }.asFlow()
 
-    override fun searchGames(query: String): Flow<Resource<List<Games>>> =
-        object: NetworkBoundResource<List<Games>, List<GamesResponse>>(appExecutors){
+    override fun searchGames(query: String): Flow<com.dhandev.gamer.core.data.Resource<List<Games>>> =
+        object: com.dhandev.gamer.core.data.NetworkBoundResource<List<Games>, List<GamesResponse>>(appExecutors){
             override fun loadFromDB(): Flow<List<Games>> {
                 return localDataSource.getSearch(query).map { DataMapper.mapEntitiesToDomain(it) }
             }

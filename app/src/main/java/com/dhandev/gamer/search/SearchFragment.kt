@@ -54,18 +54,18 @@ class SearchFragment : Fragment() {
         searchViewModel.setSearch(query.toString()).observe(viewLifecycleOwner) { games ->
             if (games != null){
                 when(games){
-                    is Resource.Loading -> {
+                    is com.dhandev.gamer.core.data.Resource.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
                         binding.animationView.visibility = View.VISIBLE
                     }
-                    is Resource.Success -> {
+                    is com.dhandev.gamer.core.data.Resource.Success -> {
                         binding.progressBar.visibility = View.GONE
                         binding.animationView.visibility = View.GONE
                         adapterGame.setData(games.data)
                         Log.e("Search Data", games.data.toString())
                         //TODO: KNOWN BUG -> Search show all games from database, after navigate to other screen and back to it
                     }
-                    is Resource.Error -> {
+                    is com.dhandev.gamer.core.data.Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
                         binding.animationView.visibility = View.VISIBLE
                     }

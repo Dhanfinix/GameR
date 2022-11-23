@@ -38,7 +38,7 @@ class DetailActivity : AppCompatActivity() {
             Glide.with(this)
                 .load(it.backgroundImage)
                 .into(binding.ivDetailImage)
-            val rating = if (it.rating != null) it.rating * 100/5 else 0
+            val rating = if (it.rating != null) it.rating!! * 100/5 else 0
             binding.content.progRating.progress = rating.toInt()
             binding.content.tvRating.text = it.rating.toString()
             binding.content.progMeta.progress = it.metacritic?.toInt() ?: 0

@@ -3,7 +3,7 @@ package com.dhandev.gamer.core.data.source.remote
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.dhandev.gamer.BuildConfig
+import com.dhandev.gamer.core.BuildConfig
 import com.dhandev.gamer.core.data.source.remote.network.ApiResponse
 import com.dhandev.gamer.core.data.source.remote.network.ApiService
 import com.dhandev.gamer.core.data.source.remote.response.GamesResponse

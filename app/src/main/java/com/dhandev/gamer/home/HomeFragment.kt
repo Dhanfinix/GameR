@@ -14,14 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dhandev.gamer.R
 import com.dhandev.gamer.core.data.Resource
 import com.dhandev.gamer.core.ui.GamesAdapter
-import com.dhandev.gamer.core.ui.ViewModelFactory
 import com.dhandev.gamer.databinding.FragmentHomeBinding
 import com.dhandev.gamer.detail.DetailActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private lateinit var homeViewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel by viewModel()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -47,9 +47,6 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
 //                Toast.makeText(requireActivity(), selectedData.id.toString(), Toast.LENGTH_SHORT).show()
             }
-
-            val factory = ViewModelFactory.getInstance(requireActivity())
-            homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
             homeViewModel.games.observe(viewLifecycleOwner) { games ->
                 if (games != null){

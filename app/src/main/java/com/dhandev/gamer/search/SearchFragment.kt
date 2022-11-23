@@ -7,22 +7,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dhandev.gamer.R
 import com.dhandev.gamer.core.data.Resource
 import com.dhandev.gamer.core.ui.GamesAdapter
-import com.dhandev.gamer.core.ui.ViewModelFactory
 import com.dhandev.gamer.databinding.FragmentSearchBinding
 import com.dhandev.gamer.detail.DetailActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
-    private lateinit var viewModel: SearchViewModel
+    private val searchViewModel: SearchViewModel by viewModel()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -41,9 +37,6 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null){
-            val factory = ViewModelFactory.getInstance(requireActivity())
-            viewModel = ViewModelProvider(this, factory)[SearchViewModel::class.java]
-
             val query = binding.edQuery.text
             binding.btnSearch.setOnClickListener {
                 search(query)
@@ -58,7 +51,7 @@ class SearchFragment : Fragment() {
             intent.putExtra(DetailActivity.EXTRA_DATA, it)
             startActivity(intent)
         }
-        viewModel.setSearch(query.toString()).observe(viewLifecycleOwner) { games ->
+        searchViewModel.setSearch(query.toString()).observe(viewLifecycleOwner) { games ->
             if (games != null){
                 when(games){
                     is Resource.Loading -> {
@@ -70,6 +63,7 @@ class SearchFragment : Fragment() {
                         binding.animationView.visibility = View.GONE
                         adapterGame.setData(games.data)
                         Log.e("Search Data", games.data.toString())
+                        //TODO: KNOWN BUG -> Search show all games from database, after navigate to other screen and back to it
                     }
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE

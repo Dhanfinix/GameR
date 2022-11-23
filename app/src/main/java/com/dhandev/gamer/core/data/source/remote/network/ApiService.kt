@@ -8,13 +8,13 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("games")
-    fun getList(
+    suspend fun getList(
         @Query("key") key: String
-    ): Call<ListGamesResponse>
+    ): ListGamesResponse
 
     @GET("games")
-    fun getSearch(
+    suspend fun getSearch(
         @Query("key") key: String,
         @Query("search") search: String,
-    ): Call<ListGamesResponse>
+    ): ListGamesResponse
 }

@@ -9,14 +9,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.dhandev.gamer.R
 import com.dhandev.gamer.core.domain.model.Games
-import com.dhandev.gamer.core.ui.ViewModelFactory
 import com.dhandev.gamer.databinding.ActivityDetailBinding
 import com.dhandev.gamer.home.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DecimalFormat
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
-    private lateinit var detailViewModel: DetailViewModel
+    private val detailViewModel: DetailViewModel by viewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -25,10 +26,6 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
 
         val detailGames = intent.getParcelableExtra<Games>(EXTRA_DATA)
-
-
-        val factory = ViewModelFactory.getInstance(this)
-        detailViewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
 
         showDetailgames(detailGames)
 
@@ -55,7 +52,6 @@ class DetailActivity : AppCompatActivity() {
                 statusFavorite = !statusFavorite!!
                 detailViewModel.setFavorite(detailGames, statusFavorite!!)
                 setStatusFavorite(statusFavorite!!)
-                //TODO: LAST TIME I ADD NULL ON ENTITY, RESPONSE, DOMAIN
             }
         }
     }

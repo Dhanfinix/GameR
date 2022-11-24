@@ -2,17 +2,12 @@ package com.dhandev.gamer.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.dhandev.gamer.R
 import com.dhandev.gamer.core.domain.model.Games
 import com.dhandev.gamer.databinding.ActivityDetailBinding
-import com.dhandev.gamer.home.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.DecimalFormat
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding

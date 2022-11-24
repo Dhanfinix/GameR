@@ -7,51 +7,37 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dhandev.gamer.core.data.Resource
 import com.dhandev.gamer.core.ui.GamesAdapter
-import com.dhandev.gamer.databinding.FragmentSearchBinding
+import com.dhandev.gamer.databinding.ActivitySearchBinding
 import com.dhandev.gamer.detail.DetailActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchFragment : Fragment() {
+class SearchActivity : AppCompatActivity() {
 
-    private var _binding: FragmentSearchBinding? = null
+    private lateinit var binding: ActivitySearchBinding
     private val searchViewModel: SearchViewModel by viewModel()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivitySearchBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        if (activity != null){
-            val query = binding.edQuery.text
-            binding.btnSearch.setOnClickListener {
-                search(query)
-            }
+        val query = binding.edQuery.text
+        binding.btnSearch.setOnClickListener {
+            search(query)
         }
     }
 
     private fun search(query: Editable) {
         val adapterGame = GamesAdapter()
         adapterGame.onItemClick = {
-            val intent = Intent(requireActivity(), DetailActivity::class.java)
+            val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra(DetailActivity.EXTRA_DATA, it)
             startActivity(intent)
         }
-        searchViewModel.setSearch(query.toString()).observe(viewLifecycleOwner) { games ->
+        searchViewModel.setSearch(query.toString()).observe(this) { games ->
             if (games != null){
                 when(games){
                     is com.dhandev.gamer.core.data.Resource.Loading -> {
@@ -77,10 +63,5 @@ class SearchFragment : Fragment() {
             setHasFixedSize(true)
             adapter = adapterGame
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

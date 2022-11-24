@@ -16,7 +16,7 @@
         android:theme="@style/Theme.GameR"
         tools:targetApi="31">
         <activity
-            android:name=".FavoriteActivity"
+            android:name=".search.SearchActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -31,7 +31,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>

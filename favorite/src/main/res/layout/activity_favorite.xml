@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".favorite.FavoriteFragment">
+    tools:context=".FavoriteActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_games"
+        android:id="@+id/rv_games_fav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_list_games"/>
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:lottie_fileName="notfound.json"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -71,7 +71,6 @@ class SearchActivity : AppCompatActivity() {
                         binding.animationView.visibility = View.GONE
                         adapterGame.setData(games.data)
                         Log.e("Search Data", games.data.toString())
-                        //TODO: KNOWN BUG -> Search show all games from database, after navigate to other screen and back to it
                     }
                     is com.dhandev.gamer.core.data.Resource.Error -> {
                         binding.progressBar.visibility = View.GONE

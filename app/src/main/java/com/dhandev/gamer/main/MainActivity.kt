@@ -3,7 +3,6 @@ package com.dhandev.gamer.main
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -54,8 +53,8 @@ class MainActivity : AppCompatActivity() {
                     is com.dhandev.gamer.core.data.Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                     is com.dhandev.gamer.core.data.Resource.Success -> {
                         binding.progressBar.visibility = View.GONE
-                        gamesAdapter.setData(games.data)
-                        Log.e("Home Data", games.data.toString())
+                        val items = games.data?.toMutableList()
+                        gamesAdapter.submitList(items)
                     }
                     is com.dhandev.gamer.core.data.Resource.Error -> {
                         binding.progressBar.visibility = View.GONE

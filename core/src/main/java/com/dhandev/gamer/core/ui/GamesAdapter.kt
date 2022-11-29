@@ -3,32 +3,35 @@ package com.dhandev.gamer.core.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dhandev.gamer.core.R
 import com.dhandev.gamer.core.databinding.ItemListGamesBinding
 import com.dhandev.gamer.core.domain.model.Games
 
-class GamesAdapter : RecyclerView.Adapter<GamesAdapter.ListViewHolder>() {
+class GamesAdapter : ListAdapter<Games, GamesAdapter.ListViewHolder>(DiffCallback()) {
 
-    private var listData = ArrayList<Games>()
     var onItemClick: ((Games) -> Unit)? = null
-
-    fun setData(newListData: List<Games>?) {
-        if (newListData == null) return
-        listData.clear()
-        listData.addAll(newListData)
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_games, parent, false))
 
-    override fun getItemCount() = listData.size
+    override fun getItemCount() = currentList.size
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val data = listData[position]
-        holder.bind(data)
+        val item = currentList[position]
+        holder.bind(item)
+    }
+
+    private class DiffCallback : DiffUtil.ItemCallback<Games>() {
+
+        override fun areItemsTheSame(oldItem: Games, newItem: Games) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: Games, newItem: Games) =
+            oldItem == newItem
     }
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -46,7 +49,7 @@ class GamesAdapter : RecyclerView.Adapter<GamesAdapter.ListViewHolder>() {
 
         init {
             binding.root.setOnClickListener {
-                onItemClick?.invoke(listData[adapterPosition])
+                onItemClick?.invoke(currentList[adapterPosition])
             }
         }
     }

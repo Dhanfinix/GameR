@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -69,8 +68,8 @@ class SearchActivity : AppCompatActivity() {
                     is com.dhandev.gamer.core.data.Resource.Success -> {
                         binding.progressBar.visibility = View.GONE
                         binding.animationView.visibility = View.GONE
-                        adapterGame.setData(games.data)
-                        Log.e("Search Datas", games.data.toString())
+                        val items = games.data?.toMutableList()
+                        adapterGame.submitList(items)
                     }
                     is com.dhandev.gamer.core.data.Resource.Error -> {
                         binding.progressBar.visibility = View.GONE

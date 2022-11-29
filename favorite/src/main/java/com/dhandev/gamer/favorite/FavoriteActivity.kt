@@ -31,7 +31,8 @@ class FavoriteActivity : AppCompatActivity() {
             startActivity(intent)
         }
         favoriteViewModel.favoriteGames.observe(this) { data ->
-            adapterGame.setData(data)
+            val items = data?.toMutableList()
+            adapterGame.submitList(items)
             binding.animationView.visibility = if (data.isEmpty()) View.VISIBLE else View.INVISIBLE
         }
         with(binding.rvGamesFav) {

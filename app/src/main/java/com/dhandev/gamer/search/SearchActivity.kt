@@ -70,7 +70,7 @@ class SearchActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.GONE
                         binding.animationView.visibility = View.GONE
                         adapterGame.setData(games.data)
-                        Log.e("Search Datas", games.data.toString())
+                        Log.e("Search Data", games.data.toString())
                     }
                     is com.dhandev.gamer.core.data.Resource.Error -> {
                         binding.progressBar.visibility = View.GONE

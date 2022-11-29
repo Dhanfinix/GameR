@@ -79,7 +79,7 @@
             android:id="@+id/tv_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100"
+            tools:text="100"
             android:padding="2dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="#000000"

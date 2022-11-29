@@ -1,34 +1,31 @@
 package com.dhandev.gamer.core.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import com.dhandev.gamer.core.data.source.remote.network.ApiResponse
-
 import com.dhandev.gamer.core.utils.AppExecutors
 import kotlinx.coroutines.flow.*
 
 abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecutors: AppExecutors) {
 
-    private val result : Flow<com.dhandev.gamer.core.data.Resource<ResultType>> = flow {
-        emit(com.dhandev.gamer.core.data.Resource.Loading())
+    private val result : Flow<Resource<ResultType>> = flow {
+        emit(Resource.Loading())
         val dbSource = loadFromDB().first()
         if (shouldFetch(dbSource)) {
-            emit(com.dhandev.gamer.core.data.Resource.Loading())
+            emit(Resource.Loading())
             when (val apiResponse = createCall().first()) {
                 is ApiResponse.Success -> {
                     saveCallResult(apiResponse.data)
-                    emitAll(loadFromDB().map { com.dhandev.gamer.core.data.Resource.Success(it) })
+                    emitAll(loadFromDB().map { Resource.Success(it) })
                 }
                 is ApiResponse.Empty -> {
-                    emitAll(loadFromDB().map { com.dhandev.gamer.core.data.Resource.Success(it) })
+                    emitAll(loadFromDB().map { Resource.Success(it) })
                 }
                 is ApiResponse.Error -> {
                     onFetchFailed()
-                    emit(com.dhandev.gamer.core.data.Resource.Error<ResultType>(apiResponse.errorMessage))
+                    emit(Resource.Error(apiResponse.errorMessage))
                 }
             }
         } else {
-            emitAll(loadFromDB().map { com.dhandev.gamer.core.data.Resource.Success(it) })
+            emitAll(loadFromDB().map { Resource.Success(it) })
         }
     }
 
@@ -42,5 +39,5 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecut
 
     protected abstract suspend fun saveCallResult(data: RequestType)
 
-    fun asFlow(): Flow<com.dhandev.gamer.core.data.Resource<ResultType>> = result
+    fun asFlow(): Flow<Resource<ResultType>> = result
 }

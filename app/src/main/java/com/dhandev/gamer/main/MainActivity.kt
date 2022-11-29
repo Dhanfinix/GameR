@@ -46,12 +46,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra(DetailActivity.EXTRA_DATA, selectedData)
             startActivity(intent)
-//                Toast.makeText(requireActivity(), selectedData.id.toString(), Toast.LENGTH_SHORT).show()
         }
 
         mainViewModel.games.observe(this) { games ->
             if (games != null){
-//                    Toast.makeText(requireActivity(), games.data?.get(0).toString(), Toast.LENGTH_SHORT).show()
                 when(games){
                     is com.dhandev.gamer.core.data.Resource.Loading -> binding.progressBar.visibility = View.VISIBLE
                     is com.dhandev.gamer.core.data.Resource.Success -> {
@@ -91,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         setVisibility(clicked)
         setAnimation(clicked)
         setClickable(clicked)
-        clicked = !clicked  //to false or true when click
+        clicked = !clicked
     }
 
     private fun setClickable(clicked: Boolean) {

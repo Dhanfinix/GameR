@@ -1,9 +1,5 @@
 package com.dhandev.gamer.core.data
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import com.dhandev.gamer.core.data.source.local.LocalDataSource
 import com.dhandev.gamer.core.data.source.remote.RemoteDataSource
 import com.dhandev.gamer.core.data.source.remote.network.ApiResponse
 import com.dhandev.gamer.core.data.source.remote.response.GamesResponse
@@ -20,8 +16,8 @@ class GamesRepository constructor(
     private val appExecutors: AppExecutors
 ) : IGamesRepository {
 
-    override fun getAllGames(): Flow<com.dhandev.gamer.core.data.Resource<List<Games>>> =
-        object: com.dhandev.gamer.core.data.NetworkBoundResource<List<Games>, List<GamesResponse>>(appExecutors){
+    override fun getAllGames(): Flow<Resource<List<Games>>> =
+        object: NetworkBoundResource<List<Games>, List<GamesResponse>>(appExecutors){
             override fun loadFromDB(): Flow<List<Games>> {
                 return localDataSource.getAllGames().map { DataMapper.mapEntitiesToDomain(it) }
             }
@@ -38,15 +34,13 @@ class GamesRepository constructor(
 
         }.asFlow()
 
-    override fun searchGames(query: String): Flow<com.dhandev.gamer.core.data.Resource<List<Games>>> =
-        object: com.dhandev.gamer.core.data.NetworkBoundResource<List<Games>, List<GamesResponse>>(appExecutors){
+    override fun searchGames(query: String): Flow<Resource<List<Games>>> =
+        object: NetworkBoundResource<List<Games>, List<GamesResponse>>(appExecutors){
             override fun loadFromDB(): Flow<List<Games>> {
                 return localDataSource.getSearch(query).map { DataMapper.mapEntitiesToDomain(it) }
             }
 
             override fun shouldFetch(data: List<Games>?): Boolean {
-//                val should = data == null || data.isEmpty()
-//                Log.e("SHouLD FETCH", should.toString())
                 return true
             }
 

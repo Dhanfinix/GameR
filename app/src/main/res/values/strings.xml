@@ -17,4 +17,6 @@
     <string name="suggestion_count">Suggestion Count</string>
     <string name="search_games">Search Games</string>
     <string name="search">Search</string>
+    <string name="add_to_favorite">Added to Favorite</string>
+    <string name="removed_fav">Removed from Favorite</string>
 </resources>

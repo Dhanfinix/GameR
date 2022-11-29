@@ -1,7 +1,8 @@
 package com.dhandev.gamer.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.dhandev.gamer.R
@@ -29,24 +30,29 @@ class DetailActivity : AppCompatActivity() {
     private fun showDetailgames(detailGames: Games?) {
         detailGames?.let {
             supportActionBar?.title = it.name
-            binding.content.tvSuggestion.text = it.suggestionsCount.toString()
-            Glide.with(this)
-                .load(it.backgroundImage)
-                .into(binding.ivDetailImage)
-            val rating = if (it.rating != null) it.rating!! * 100/5 else 0
-            binding.content.progRating.progress = rating.toInt()
-            binding.content.tvRating.text = it.rating.toString()
-            binding.content.progMeta.progress = it.metacritic?.toInt() ?: 0
-            binding.content.tvMeta.text = it.metacritic.toString()
+            binding.apply {
+                content.tvSuggestion.text = it.suggestionsCount.toString()
+                Glide.with(this@DetailActivity)
+                    .load(it.backgroundImage)
+                    .into(ivDetailImage)
+                val rating = if (it.rating != null) it.rating!! * 100/5 else 0
+                content.progRating.progress = rating.toInt()
+                content.tvRating.text = it.rating.toString()
+                content.progMeta.progress = it.metacritic?.toInt() ?: 0
+                content.tvMeta.text = it.metacritic.toString()
+            }
 
             var statusFavorite = detailGames.isFavorite
             if (statusFavorite != null) {
                 setStatusFavorite(statusFavorite)
             }
             binding.fab.setOnClickListener {
+                Toast.makeText(this, if (statusFavorite == true) getString(R.string.removed_fav) else getString(
+                                    R.string.add_to_favorite), Toast.LENGTH_SHORT).show()
                 statusFavorite = !statusFavorite!!
                 detailViewModel.setFavorite(detailGames, statusFavorite!!)
                 setStatusFavorite(statusFavorite!!)
+
             }
         }
     }

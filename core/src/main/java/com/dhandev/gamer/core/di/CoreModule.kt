@@ -1,8 +1,7 @@
 package com.dhandev.gamer.core.di
 
 import androidx.room.Room
-import com.dhandev.gamer.core.data.GamesRepository
-import com.dhandev.gamer.core.data.source.local.LocalDataSource
+import com.dhandev.gamer.core.BuildConfig
 import com.dhandev.gamer.core.data.source.local.room.GamesDatabase
 import com.dhandev.gamer.core.data.source.remote.RemoteDataSource
 import com.dhandev.gamer.core.data.source.remote.network.ApiService
@@ -26,17 +25,19 @@ val databaseModule = module{
     }
 }
 
+val loggingInterceptor = if(BuildConfig.DEBUG) { HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY) }else { HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE) }
+
 val networkModule = module {
     single {
         OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(loggingInterceptor)
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
             .build()
     }
     single {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.rawg.io/api/")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(get())
             .build()
